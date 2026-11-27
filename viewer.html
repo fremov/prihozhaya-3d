@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Лофт-гостиная · план и 3D</title>
+<style>
+:root{--bg:#eae7e1;--surface:#faf8f4;--fg:#2c2925;--muted:#6b645c;--line:#d3cdc3;--accent:#875339;--soft:#eee0d3;--warning:#8c5420;font-family:'Segoe UI',Arial,sans-serif;color:var(--fg);background:var(--bg)}
+*{box-sizing:border-box}body{margin:0;padding:18px;height:100dvh;display:flex;flex-direction:column;gap:14px}button,input{font:inherit;color:inherit}button{cursor:pointer}header{display:flex;justify-content:space-between;align-items:center;gap:14px}h1{font-size:23px;font-weight:600;letter-spacing:-.6px;margin:0 0 4px}.meta{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.seg{display:flex;gap:3px;border:1px solid var(--line);padding:3px;border-radius:24px;background:var(--surface)}.seg button{border:0;background:none;border-radius:22px;padding:8px 14px;font-size:13px}.seg button[aria-pressed=true]{background:var(--fg);color:var(--bg)}
+.layouts{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 310px;flex:1;min-height:0;gap:14px}
+.stage{min-height:0;position:relative;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#e2e6de}.stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#plan{position:absolute;inset:0;background:var(--surface);padding:20px}#plan svg{width:100%;height:100%}
+.tag,.hint{position:absolute;pointer-events:none;background:rgba(250,248,244,.94);padding:7px 10px;border-radius:7px;font-size:11px}.tag{top:14px;left:14px;border:1px solid var(--line);letter-spacing:.04em;color:var(--accent)}.hint{left:14px;bottom:14px;color:var(--muted)}
+aside{overflow:auto;padding:2px 5px 10px 0}h2{font-size:17px;line-height:1.3;font-weight:600;margin:3px 0 8px}p{font-size:13px;line-height:1.6;margin:0 0 12px}.muted{color:var(--muted)}.eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+.item{width:100%;display:flex;text-align:left;gap:11px;align-items:center;padding:11px 0;border:0;border-top:1px solid var(--line);background:none}.item[aria-pressed=true]{color:var(--accent)}.number{font-size:11px;border:1px solid var(--line);border-radius:50%;width:24px;height:24px;display:grid;place-items:center;flex:none}.item strong{font-size:13px;display:block;font-weight:600}.item small{font-size:11px;color:var(--muted);display:block;margin-top:4px}
+.note{font-size:12px;line-height:1.6;border-left:2px solid var(--accent);padding-left:11px;margin:16px 0}.uncertain{color:var(--warning)}details{border-top:1px solid var(--line);padding-top:12px;font-size:12px;line-height:1.6;margin-top:12px}summary{cursor:pointer;font-weight:600;margin-bottom:8px}
+label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0}input{width:85px;padding:5px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}.action,.chip{border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:8px 11px;font-size:12px}.action:hover,.chip:hover{border-color:var(--accent)}.chip[aria-pressed=true]{background:var(--soft);border-color:var(--accent);color:var(--accent)}
+.downloads,.chips{display:flex;flex-wrap:wrap;gap:7px}.downloads{margin-top:14px}.dock{display:flex;justify-content:space-between;gap:14px;align-items:flex-end;flex-wrap:wrap}.group{display:flex;flex-direction:column;gap:6px}.status{font-size:11px;color:var(--muted)}
+#loading{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:30px;background:#e2e6de;z-index:3}[hidden]{display:none!important}#selected{border-top:1px solid var(--line);padding-top:14px;margin-top:4px}button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}#error{color:#a13b27;font-size:12px}.toggle{justify-content:flex-start;font-size:12px}.toggle input{width:auto}
+@media(max-width:900px){body{height:auto;min-height:100dvh;padding:12px;gap:12px}.workspace{display:contents}.stage{height:58dvh;min-height:340px;flex:none;order:2}aside{overflow:visible;padding:4px 0;order:4}.dock{order:3;align-items:flex-start}header{flex-wrap:wrap;order:0}.layouts{order:1}.layouts>.label{width:100%}h1{font-size:20px}.hint{font-size:10px;right:14px}#plan{padding:4px}}
+@media print{body{height:auto;background:white}header .seg,.layouts,.dock,.hint,.tag,aside{display:none}.workspace{display:block}.stage{height:90vh;border:0}#plan{display:block!important}canvas{display:none!important}}
+</style></head><body>
+<header><div><h1>Гостиная с обеденной зоной</h1><div class="meta" id="dimensions"></div></div><div class="seg" id="lights" role="group" aria-label="Освещение"><button data-light="day" aria-pressed="true">День</button><button data-light="evening" aria-pressed="false">Вечер</button></div></header>
+<nav class="layouts" aria-label="Настройки модели"><label class="toggle"><input id="tv" type="checkbox" checked>Телевизор</label></nav>
+<div class="workspace">
+<main class="stage" id="stage" aria-label="Интерактивная модель лофт-гостиной"><div id="loading" role="status">Строю 3D-модель…</div><div id="plan" hidden></div><div class="tag" id="viewTag">ОБЩИЙ ВИД · БЕЗ ПОТОЛКА</div><div class="hint" id="hint">Мышь — вращение · колесо — масштаб · правая кнопка — сдвиг · нажмите на мебель</div></main>
+<aside>
+<p class="eyebrow">Гостиная / обеденная зона</p><h2 id="layoutHeading"></h2><p class="muted" id="layoutSummary"></p><div id="items"></div><section id="selected" aria-live="polite"></section>
+<p class="note">В этой модели марш шириной около 90 см примыкает к стене: разместить комнату непосредственно под ним невозможно. Здесь мебель показана в соседнем пространстве; для планировки отдельной комнаты нужен её план и высоты под лестницей.</p>
+<details><summary>Размеры и ограничения</summary>
+<p class="uncertain">Это эскиз, не рабочий проект. У первой ступени в исходной геометрии всего 35 см до стены. Возможность бокового захода, высоту прохода и ограждение проверить со специалистом до реализации.</p>
+<p>Приняты 6 × 6 м и высота 270 см. Цепочка на стене с двумя дверями даёт 540 см вместо общих 600 см: последний простенок условно 184 см. Две двери — по 60 см, веранда — 92 см, боковые — по 80 см. Петли и дуги открывания условны.</p>
+<form id="measurements">
+<label>Ширина, м<input name="L" type="number" min="6" max="8" step=".01" value="6" required></label>
+<label>Длина, м<input name="W" type="number" min="5.9" max="8" step=".01" value="6" required></label>
+<label>Высота, м<input name="H" type="number" min="2.4" max="3.5" step=".01" value="2.7" required></label>
+<label>Две двери, м<input name="door" type="number" min=".6" max=".9" step=".01" value=".6" required></label>
+<button class="action" type="submit">Применить размеры</button><p id="error" role="alert"></p>
+</form>
+<p>Расстановка условная: проверить проходы, выдвижение стульев, доступ к щитку и выключателям. Стеллаж закрепить; крепление реек и безопасность ограждения согласовать после обмера.</p>
+</details>
+<details><summary>Материалы и свет</summary><p>Светлый пол, бетонный тон стен, кирпич у лестницы, дуб и чёрный металл. Трековый свет, подвесы над столом и подсветка зеркала; потолок скрыт. Зеркало показано без настоящего отражения. Палитры меняют цвета, а не расстановку.</p></details>
+<div class="downloads"><button class="action" id="savePlan">Скачать план SVG</button><button class="action" id="saveModel">Скачать 3D · GLB</button></div>
+</aside></div>
+<footer class="dock">
+<div class="group"><span class="label">Вид</span><div class="chips" id="views"><button class="chip" data-view="overall" aria-pressed="true">Общий</button><button class="chip" data-view="entry" aria-pressed="false">От входа</button><button class="chip" data-view="lounge" aria-pressed="false">От дивана</button><button class="chip" data-view="stairs" aria-pressed="false">К лестнице</button><button class="chip" data-view="plan" aria-pressed="false">План с размерами</button></div></div>
+<div class="group"><span class="label">Палитра лофт</span><div class="chips" id="palettes"><button class="chip" data-palette="oak" aria-pressed="true">Графит + коньячный</button><button class="chip" data-palette="sage" aria-pressed="false">Бетон + оливковый</button><button class="chip" data-palette="sand" aria-pressed="false">Тёплый песочный</button></div></div>
+<div class="group"><label class="toggle"><input id="doors" type="checkbox">Показать полотна дверей</label><div class="status" id="status" role="status">Эскиз · размеры требуют обмера</div></div>
+</footer>
+<!-- BUNDLE -->
+</body></html>
